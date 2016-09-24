@@ -2,7 +2,16 @@
     <contextName>testlog</contextName>
     <property name="LOG_HOME" value="d:\\log\\"/>
 
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <encoder>
+            <pattern>%-4relative %date [%thread] %-5level %logger{35} -  %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ROLLFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/test.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_HOME}/%d{yyyy-MM-dd}/test.log</fileNamePattern>
@@ -13,11 +22,11 @@
         </encoder>
     </appender>
 
-    <logger name="test" addtivity="true">
-        <appender-ref ref="FILE"/>
+    <logger name="com.hxy.App" addtivity="false" level="DEBUG">
+        <appender-ref ref="STDOUT"/>
     </logger>
 
     <root level="DEBUG">
-        <appender-ref ref="FILE"/>
+        <appender-ref ref="ROLLFILE"/>
     </root>
 </configuration>
